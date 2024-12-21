@@ -1,7 +1,6 @@
 package com.restaurante.domain;
 
 import lombok.Data;
-
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -21,4 +20,17 @@ public class Order {
   private LocalDateTime orderTime;
   private String status;
   private BigDecimal totalAmount;
+
+  // Métodos setters manualmente adicionados
+  public void setOrderTime(LocalDateTime orderTime) {
+    this.orderTime = orderTime;
+  }
+
+  public void setStatus(String status) {
+    this.status = status;
+  }
+
+  public Long getId() {
+    return this.id;
+  }
 }

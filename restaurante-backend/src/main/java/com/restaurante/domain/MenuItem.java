@@ -1,7 +1,6 @@
 package com.restaurante.domain;
 
 import lombok.Data;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,7 +14,7 @@ public class MenuItem {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String name;
-  private String description;
   private BigDecimal price;
+  private String description;
   private String category;
 }

@@ -1,1 +1,8 @@
 com\restaurante\interfaces\OrderController.class
+com\restaurante\domain\InventoryItem.class
+com\restaurante\domain\OrderRepository.class
+com\restaurante\application\OrderService.class
+com\restaurante\domain\InventoryItemRepository.class
+com\restaurante\domain\Order.class
+com\restaurante\App.class
+com\restaurante\domain\MenuItem.class
