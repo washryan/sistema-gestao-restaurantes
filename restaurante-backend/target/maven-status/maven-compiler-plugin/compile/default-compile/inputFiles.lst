@@ -1,0 +1,15 @@
+C:\Users\mzica\OneDrive\Desktop\sistema-gestao-restaurantes\restaurante-backend\src\main\java\com\restaurante\domain\OrderRepository.java
+C:\Users\mzica\OneDrive\Desktop\sistema-gestao-restaurantes\restaurante-backend\src\main\java\com\restaurante\domain\Order.java
+C:\Users\mzica\OneDrive\Desktop\sistema-gestao-restaurantes\restaurante-backend\src\main\java\com\restaurante\RestauranteApplication.java
+C:\Users\mzica\OneDrive\Desktop\sistema-gestao-restaurantes\restaurante-backend\src\main\java\com\restaurante\interfaces\OrderController.java
+C:\Users\mzica\OneDrive\Desktop\sistema-gestao-restaurantes\restaurante-backend\src\main\java\com\restaurante\App.java
+C:\Users\mzica\OneDrive\Desktop\sistema-gestao-restaurantes\restaurante-backend\src\main\java\com\restaurante\infrastructure\persistence\JpaMenuItemRepository.java
+C:\Users\mzica\OneDrive\Desktop\sistema-gestao-restaurantes\restaurante-backend\src\main\java\com\restaurante\interfaces\InventoryController.java
+C:\Users\mzica\OneDrive\Desktop\sistema-gestao-restaurantes\restaurante-backend\src\main\java\com\restaurante\interfaces\MenuController.java
+C:\Users\mzica\OneDrive\Desktop\sistema-gestao-restaurantes\restaurante-backend\src\main\java\com\restaurante\domain\InventoryItemRepository.java
+C:\Users\mzica\OneDrive\Desktop\sistema-gestao-restaurantes\restaurante-backend\src\main\java\com\restaurante\domain\MenuItem.java
+C:\Users\mzica\OneDrive\Desktop\sistema-gestao-restaurantes\restaurante-backend\src\main\java\com\restaurante\application\InventoryService.java
+C:\Users\mzica\OneDrive\Desktop\sistema-gestao-restaurantes\restaurante-backend\src\main\java\com\restaurante\application\MenuService.java
+C:\Users\mzica\OneDrive\Desktop\sistema-gestao-restaurantes\restaurante-backend\src\main\java\com\restaurante\domain\InventoryItem.java
+C:\Users\mzica\OneDrive\Desktop\sistema-gestao-restaurantes\restaurante-backend\src\main\java\com\restaurante\application\OrderService.java
+C:\Users\mzica\OneDrive\Desktop\sistema-gestao-restaurantes\restaurante-backend\src\main\java\com\restaurante\domain\MenuItemRepository.java
