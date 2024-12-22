@@ -21,7 +21,6 @@ public class Order {
   private String status;
   private BigDecimal totalAmount;
 
-  // Métodos setters manualmente adicionados
   public void setOrderTime(LocalDateTime orderTime) {
     this.orderTime = orderTime;
   }
@@ -32,5 +31,13 @@ public class Order {
 
   public Long getId() {
     return this.id;
+  }
+
+  public List<MenuItem> getItems() {
+    return this.items;
+  }
+
+  public void setItems(List<MenuItem> items) {
+    this.items = items;
   }
 }

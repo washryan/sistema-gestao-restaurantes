@@ -1,11 +1,20 @@
 package com.restaurante;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 
-public class AppTest {
+@SpringBootTest
+@TestPropertySource(properties = {
+        "spring.datasource.url=jdbc:h2:mem:testdb",
+        "spring.datasource.driverClassName=org.h2.Driver",
+        "spring.datasource.username=sa",
+        "spring.datasource.password=password",
+        "spring.jpa.database-platform=org.hibernate.dialect.H2Dialect"
+})
+class AppTest {
+
     @Test
-    public void shouldAnswerWithTrue() {
-        assertTrue(true);
+    void contextLoads() {
     }
 }

@@ -28,19 +28,12 @@ class MenuControllerTest {
 
   @Test
   void getAllMenuItems_shouldReturnAllItems() throws Exception {
-    // Arrange
-    MenuItem item1 = new MenuItem();
-    item1.setName("Pizza");
-    item1.setPrice(new BigDecimal("10.99"));
-
-    MenuItem item2 = new MenuItem();
-    item2.setName("Burger");
-    item2.setPrice(new BigDecimal("8.99"));
+    MenuItem item1 = new MenuItem("Pizza", new BigDecimal("10.99"));
+    MenuItem item2 = new MenuItem("Burger", new BigDecimal("8.99"));
 
     List<MenuItem> menuItems = Arrays.asList(item1, item2);
     when(menuService.getAllMenuItems()).thenReturn(menuItems);
 
-    // Act & Assert
     mockMvc.perform(get("/api/menu"))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -54,14 +47,9 @@ class MenuControllerTest {
 
   @Test
   void addMenuItem_shouldAddAndReturnItem() throws Exception {
-    // Arrange
-    MenuItem item = new MenuItem();
-    item.setName("Salad");
-    item.setPrice(new BigDecimal("6.99"));
-
+    MenuItem item = new MenuItem("Salad", new BigDecimal("6.99"));
     when(menuService.addMenuItem(any(MenuItem.class))).thenReturn(item);
 
-    // Act & Assert
     mockMvc.perform(post("/api/menu")
         .contentType(MediaType.APPLICATION_JSON)
         .content("{\"name\":\"Salad\",\"price\":6.99}"))
