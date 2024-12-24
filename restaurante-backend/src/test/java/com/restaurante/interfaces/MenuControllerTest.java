@@ -1,18 +1,23 @@
 package com.restaurante.interfaces;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.restaurante.application.MenuService;
 import com.restaurante.domain.MenuItem;
+import com.restaurante.security.JwtTokenProvider;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -26,7 +31,16 @@ class MenuControllerTest {
   @MockBean
   private MenuService menuService;
 
+  @MockBean
+  private JwtTokenProvider jwtTokenProvider;
+
+  @BeforeEach
+  void setUp() {
+    when(jwtTokenProvider.validateToken(any())).thenReturn(true);
+  }
+
   @Test
+  @WithMockUser
   void getAllMenuItems_shouldReturnAllItems() throws Exception {
     MenuItem item1 = new MenuItem("Pizza", new BigDecimal("10.99"));
     MenuItem item2 = new MenuItem("Burger", new BigDecimal("8.99"));
@@ -46,13 +60,14 @@ class MenuControllerTest {
   }
 
   @Test
+  @WithMockUser
   void addMenuItem_shouldAddAndReturnItem() throws Exception {
     MenuItem item = new MenuItem("Salad", new BigDecimal("6.99"));
     when(menuService.addMenuItem(any(MenuItem.class))).thenReturn(item);
 
     mockMvc.perform(post("/api/menu")
         .contentType(MediaType.APPLICATION_JSON)
-        .content("{\"name\":\"Salad\",\"price\":6.99}"))
+        .content(new ObjectMapper().writeValueAsString(item)))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect(jsonPath("$.name").value("Salad"))
