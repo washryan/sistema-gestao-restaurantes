@@ -5,3 +5,4 @@ echo target/ >> .gitignore
 echo .vscode/ >> .gitignore
 echo node_modules/ >> .gitignore
 echo .next/ >> .gitignore
+.vercel
