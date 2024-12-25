@@ -1,5 +1,3 @@
-// pages/[slug].tsx
-
 import { GetStaticPaths, GetStaticProps } from 'next'
 
 export const getStaticPaths: GetStaticPaths = async () => {

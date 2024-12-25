@@ -1,22 +1,20 @@
 package com.restaurante.config;
 
 import com.restaurante.security.CustomUserDetailsService;
-import com.restaurante.security.JwtAuthenticationEntryPoint;
 import com.restaurante.security.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
@@ -27,9 +25,6 @@ public class SecurityConfig {
 
   @Autowired
   CustomUserDetailsService customUserDetailsService;
-
-  @Autowired
-  private JwtAuthenticationEntryPoint unauthorizedHandler;
 
   @Bean
   public JwtAuthenticationFilter jwtAuthenticationFilter() {
@@ -53,32 +48,26 @@ public class SecurityConfig {
   }
 
   @Bean
-  public SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
+  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
         .csrf(csrf -> csrf.disable())
-        .exceptionHandling(exceptions -> exceptions
-            .authenticationEntryPoint(unauthorizedHandler))
-        .sessionManagement(session -> session
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers(mvc.pattern("/")).permitAll()
-            .requestMatchers(mvc.pattern("/favicon.ico")).permitAll()
-            .requestMatchers(mvc.pattern("/**/*.png")).permitAll()
-            .requestMatchers(mvc.pattern("/**/*.gif")).permitAll()
-            .requestMatchers(mvc.pattern("/**/*.svg")).permitAll()
-            .requestMatchers(mvc.pattern("/**/*.jpg")).permitAll()
-            .requestMatchers(mvc.pattern("/**/*.html")).permitAll()
-            .requestMatchers(mvc.pattern("/**/*.css")).permitAll()
-            .requestMatchers(mvc.pattern("/**/*.js")).permitAll()
-            .requestMatchers(mvc.pattern("/api/auth/**")).permitAll()
-            .requestMatchers(mvc.pattern("/api/menu/**")).permitAll() // Permitir acesso ao endpoint de menu
-            .requestMatchers(mvc.pattern("/api/user/checkUsernameAvailability")).permitAll()
-            .requestMatchers(mvc.pattern("/api/user/checkEmailAvailability")).permitAll()
-            .requestMatchers(mvc.pattern(HttpMethod.GET, "/api/polls/**")).permitAll()
-            .requestMatchers(mvc.pattern(HttpMethod.GET, "/api/users/**")).permitAll()
+            .requestMatchers(HttpMethod.GET, "/api/menu/**").permitAll()
+            .requestMatchers(HttpMethod.POST, "/api/menu/**").permitAll()
             .anyRequest().authenticated());
 
-    http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+    return http.build();
+  }
+
+  @Bean
+  @Order(2)
+  public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+    http
+        .csrf(csrf -> csrf.disable())
+        .authorizeHttpRequests(auth -> auth
+            .requestMatchers(HttpMethod.GET, "/api/menu/**").permitAll()
+            .requestMatchers(HttpMethod.POST, "/api/menu/**").permitAll()
+            .anyRequest().authenticated());
 
     return http.build();
   }
