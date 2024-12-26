@@ -83,7 +83,7 @@ function MenuPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle<CardTitle>Menu Items</CardTitle>
+            <CardTitle>Menu Items</CardTitle>
           </CardHeader>
           <CardContent>
             <Table>

@@ -23,6 +23,7 @@ C:\Users\mzica\OneDrive\Desktop\sistema-gestao-restaurantes\restaurante-backend\
 C:\Users\mzica\OneDrive\Desktop\sistema-gestao-restaurantes\restaurante-backend\src\main\java\com\restaurante\security\UserPrincipal.java
 C:\Users\mzica\OneDrive\Desktop\sistema-gestao-restaurantes\restaurante-backend\src\main\java\com\restaurante\interfaces\payload\LoginRequest.java
 C:\Users\mzica\OneDrive\Desktop\sistema-gestao-restaurantes\restaurante-backend\src\main\java\com\restaurante\App.java
+C:\Users\mzica\OneDrive\Desktop\sistema-gestao-restaurantes\restaurante-backend\src\main\java\com\restaurante\config\CorsConfig.java
 C:\Users\mzica\OneDrive\Desktop\sistema-gestao-restaurantes\restaurante-backend\src\main\java\com\restaurante\infrastructure\persistence\JpaMenuItemRepository.java
 C:\Users\mzica\OneDrive\Desktop\sistema-gestao-restaurantes\restaurante-backend\src\main\java\com\restaurante\interfaces\InventoryController.java
 C:\Users\mzica\OneDrive\Desktop\sistema-gestao-restaurantes\restaurante-backend\src\main\java\com\restaurante\domain\InventoryItemRepository.java

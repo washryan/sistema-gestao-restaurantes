@@ -1,0 +1,18 @@
+# Remova ou comente a linha que exclui o diretório target, se existir
+# target/
+
+# Mantenha outras exclusões
+**/node_modules
+**/.git
+**/.gitignore
+**/.vscode
+**/README.md
+**/Dockerfile
+**/.DS_Store
+**/npm-debug.log
+**/coverage
+**/.env
+**/.env.example
+**/.env.local
+**/.env.staging
+

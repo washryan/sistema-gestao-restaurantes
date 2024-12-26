@@ -24,6 +24,7 @@ com\restaurante\application\InventoryService.class
 com\restaurante\config\TestSecurityConfig.class
 com\restaurante\interfaces\payload\JwtAuthenticationResponse.class
 com\restaurante\domain\InventoryItem.class
+com\restaurante\config\CorsConfig.class
 com\restaurante\interfaces\AnalyticsController.class
 com\restaurante\interfaces\payload\SignUpRequest.class
 com\restaurante\domain\InventoryItemRepository.class

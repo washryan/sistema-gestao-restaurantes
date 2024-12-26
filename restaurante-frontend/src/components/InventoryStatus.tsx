@@ -9,6 +9,7 @@ interface InventoryItem {
   name: string;
   quantity: number;
   unit: string;
+  [key: string]: unknown; // Adiciona compatibilidade com Record<string, unknown>
 }
 
 export const InventoryStatus: React.FC = () => {
@@ -101,4 +102,3 @@ export const InventoryStatus: React.FC = () => {
     </div>
   );
 };
-
