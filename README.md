@@ -4,16 +4,6 @@ Sistema completo de gestão para restaurantes, com **frontend em Next.js + React
 
 ---
 
-## 📸 Demonstração
-
-> 🔗 **Frontend em produção:** [https://restaurante-demo.vercel.app](https://restaurante-demo.vercel.app)  
-> *(Substitua esse link quando fizer o deploy real)*
-
-![Tela inicial](./docs/demo1.png)  
-![Painel administrativo](./docs/demo2.png)
-
----
-
 ## 🔧 Tecnologias Utilizadas
 
 ### 🧠 Backend – Spring Boot 3.1.5
