@@ -36,12 +36,13 @@ Aplicação full stack para demonstração técnica, feita para rodar localmente
 
 ```powershell
 Copy-Item .env.example .env
+docker compose down -v
 docker compose up --build
 ```
 
 URLs:
 - Frontend: `http://localhost:3000`
-- Backend: `http://localhost:8080`
+- Backend: `http://localhost:8081`
 - PostgreSQL: `localhost:5432`
 
 ### Verificação rápida
@@ -82,9 +83,9 @@ O frontend acessa a API por `/api/*`, o Next faz rewrite para o backend, o backe
 ## Checklist antes da demo
 
 - `docker compose up --build` funcionando
+- Se trocou senha/variáveis antes, rodar `docker compose down -v` uma vez para recriar o volume do Postgres
 - Login abrindo sem erro
 - Dashboard carregando com seed
 - `/api/menu` respondendo
 - `/api/orders` respondendo com autenticação
 - Logs sem erro crítico no navegador
-
