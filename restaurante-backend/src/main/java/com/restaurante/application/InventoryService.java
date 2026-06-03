@@ -23,6 +23,10 @@ public class InventoryService {
       InventoryItem inventoryItem = inventoryItemRepository.findByName(item.getName())
           .orElseThrow(() -> new RuntimeException("Inventory item not found"));
 
+      if (inventoryItem.getQuantity() <= 0) {
+        throw new IllegalStateException("Insufficient inventory for item: " + item.getName());
+      }
+
       inventoryItem.setQuantity(inventoryItem.getQuantity() - 1);
       inventoryItemRepository.save(inventoryItem);
     }

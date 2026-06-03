@@ -15,4 +15,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
   @Query("SELECT NEW map(i.name as item, COUNT(i) as count) FROM Order o JOIN o.items i GROUP BY i.name ORDER BY COUNT(i) DESC")
   List<Map<String, Object>> getPopularItems();
+
+  @Query("SELECT NEW map(i.category as category, SUM(i.price) as revenue) FROM Order o JOIN o.items i GROUP BY i.category ORDER BY SUM(i.price) DESC")
+  List<Map<String, Object>> getRevenueByCategory();
 }

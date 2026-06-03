@@ -29,4 +29,9 @@ public class AnalyticsController {
   public ResponseEntity<List<Map<String, Object>>> getPopularItems() {
     return ResponseEntity.ok(analyticsService.getPopularItems());
   }
+
+  @GetMapping("/revenue-by-category")
+  public ResponseEntity<List<Map<String, Object>>> getRevenueByCategory() {
+    return ResponseEntity.ok(analyticsService.getRevenueByCategory());
+  }
 }

@@ -14,7 +14,7 @@ public class Order {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.EAGER)
   private List<MenuItem> items;
 
   private LocalDateTime orderTime;

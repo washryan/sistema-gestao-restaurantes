@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 
 interface User {
   email: string;
-  // Add other user properties as needed
 }
 
 interface AuthContextType {
@@ -17,6 +16,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -27,23 +27,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, []);
 
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
   const login = async (email: string, password: string) => {
+    setErrorMessage(null);
+
     try {
       const response = await fetch('/api/auth/signin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ usernameOrEmail: email, password }),
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
+        const errorData = await response.json().catch(() => ({ message: 'Falha no login' }));
         throw new Error(errorData.message || 'Falha no login');
       }
 
       const data = await response.json();
-      localStorage.setItem('token', data.token);
+      localStorage.setItem('token', data.accessToken);
       localStorage.setItem('userEmail', email);
       setUser({ email });
       router.push('/dashboard');
@@ -57,7 +57,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.removeItem('token');
     localStorage.removeItem('userEmail');
     setUser(null);
-    router.push('/');
+    router.push('/login');
   };
 
   return (

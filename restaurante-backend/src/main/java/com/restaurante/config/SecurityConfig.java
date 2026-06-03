@@ -1,30 +1,33 @@
 package com.restaurante.config;
 
-import com.restaurante.security.CustomUserDetailsService;
+import com.restaurante.security.JwtAuthenticationEntryPoint;
 import com.restaurante.security.JwtAuthenticationFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
-import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
 public class SecurityConfig {
+  private final JwtAuthenticationEntryPoint unauthorizedHandler;
 
-  @Autowired
-  CustomUserDetailsService customUserDetailsService;
+  public SecurityConfig(JwtAuthenticationEntryPoint unauthorizedHandler) {
+    this.unauthorizedHandler = unauthorizedHandler;
+  }
 
   @Bean
   public JwtAuthenticationFilter jwtAuthenticationFilter() {
@@ -43,31 +46,23 @@ public class SecurityConfig {
   }
 
   @Bean
-  MvcRequestMatcher.Builder mvc(HandlerMappingIntrospector introspector) {
-    return new MvcRequestMatcher.Builder(introspector);
-  }
-
-  @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
-        .csrf(csrf -> csrf.disable())
+        .cors(cors -> {
+        })
+        .csrf(AbstractHttpConfigurer::disable)
+        .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers(HttpMethod.GET, "/api/menu/**").permitAll()
-            .requestMatchers(HttpMethod.POST, "/api/menu/**").permitAll()
+            .requestMatchers(antMatcher("/api/auth/**")).permitAll()
+            .requestMatchers(antMatcher("/h2-console/**")).permitAll()
+            .requestMatchers(antMatcher("/swagger-ui/**")).permitAll()
+            .requestMatchers(antMatcher("/v3/api-docs/**")).permitAll()
+            .requestMatchers(antMatcher(HttpMethod.GET, "/api/menu/**")).permitAll()
             .anyRequest().authenticated());
 
-    return http.build();
-  }
-
-  @Bean
-  @Order(2)
-  public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-    http
-        .csrf(csrf -> csrf.disable())
-        .authorizeHttpRequests(auth -> auth
-            .requestMatchers(HttpMethod.GET, "/api/menu/**").permitAll()
-            .requestMatchers(HttpMethod.POST, "/api/menu/**").permitAll()
-            .anyRequest().authenticated());
+    http.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()));
+    http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
     return http.build();
   }

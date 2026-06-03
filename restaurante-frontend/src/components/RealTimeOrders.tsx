@@ -15,8 +15,15 @@ export const RealTimeOrders: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
 
   useEffect(() => {
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8080';
+    const wsUrl = backendUrl.startsWith('https://')
+      ? backendUrl.replace('https://', 'wss://')
+      : backendUrl.startsWith('http://')
+        ? backendUrl.replace('http://', 'ws://')
+        : `ws://${backendUrl}`;
+
     const client = new Client({
-      brokerURL: 'ws://localhost:8080/ws',
+      brokerURL: `${wsUrl}/ws`,
       onConnect: () => {
         console.log('Connected to WebSocket');
         client.subscribe('/topic/orders', (message) => {

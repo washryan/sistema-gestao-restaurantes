@@ -7,8 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class OrderService {
@@ -25,6 +27,7 @@ public class OrderService {
     this.inventoryService = inventoryService;
   }
 
+  @Transactional
   public Order createOrder(Order order) {
     logger.info("Creating new order");
     order.setOrderTime(LocalDateTime.now());
@@ -46,5 +49,18 @@ public class OrderService {
           logger.error("Order not found with ID: {}", id);
           return new RuntimeException("Order not found");
         });
+  }
+
+  public List<Order> getAllOrders() {
+    logger.info("Fetching all orders");
+    return orderRepository.findAll();
+  }
+
+  public Order updateOrderStatus(Long id, String status) {
+    Order order = getOrder(id);
+    order.setStatus(status);
+    Order updatedOrder = orderRepository.save(order);
+    messagingTemplate.convertAndSend("/topic/orders", updatedOrder);
+    return updatedOrder;
   }
 }

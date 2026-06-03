@@ -31,4 +31,11 @@ public class InventoryController {
   public InventoryItem updateInventoryItem(@RequestBody InventoryItem item) {
     return inventoryService.updateInventoryItem(item);
   }
+
+  @PutMapping("/{id}")
+  @Operation(summary = "Atualizar um item do estoque por ID", description = "Atualiza um item do estoque e retorna o item atualizado")
+  public InventoryItem updateInventoryItemById(@PathVariable Long id, @RequestBody InventoryItem item) {
+    item.setId(id);
+    return inventoryService.updateInventoryItem(item);
+  }
 }

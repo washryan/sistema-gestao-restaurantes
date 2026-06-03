@@ -1,8 +1,22 @@
-echo # Arquivos e pastas a serem ignorados pelo Git > .gitignore
-echo .idea/ >> .gitignore
-echo *.iml >> .gitignore
-echo target/ >> .gitignore
-echo .vscode/ >> .gitignore
-echo node_modules/ >> .gitignore
-echo .next/ >> .gitignore
-.vercel
+.idea/
+*.iml
+.vscode/
+
+# Backend
+target/
+restaurante-backend/target/
+
+# Frontend
+node_modules/
+restaurante-frontend/node_modules/
+.next/
+restaurante-frontend/.next/
+
+# Environment and logs
+.env
+.env.local
+*.log
+*.pid
+
+# Deploy
+.vercel/

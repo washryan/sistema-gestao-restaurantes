@@ -1,10 +1,14 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api",
+  baseURL: "/api",
 });
 
 api.interceptors.request.use((config) => {
+  if (typeof window === "undefined") {
+    return config;
+  }
+
   const token = localStorage.getItem("token");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -17,24 +21,24 @@ export const fetchMenuItems = () => api.get("/menu");
 export const addMenuItem = (item: Record<string, unknown>) =>
   api.post("/menu", item);
 
-export const fetchOrders = () => api.get("/pedidos");
+export const fetchOrders = () => api.get("/orders");
 
 export const createOrder = (order: Record<string, unknown>) =>
-  api.post("/pedidos", order);
+  api.post("/orders", order);
 
 export const updateOrderStatus = (id: number, status: string) =>
-  api.put(`/pedidos/${id}/status`, { status });
+  api.put(`/orders/${id}/status`, { status });
 
-export const fetchInventory = () => api.get("/estoque");
+export const fetchInventory = () => api.get("/inventory");
 
 export const updateInventoryItem = (item: { id: number } & Record<string, unknown>) =>
-  api.put(`/estoque/${item.id}`, item);
+  api.put(`/inventory/${item.id}`, item);
 
-export const fetchDailySalesReport = () => api.get("/analise/vendas-diarias");
+export const fetchDailySalesReport = () => api.get("/analytics/daily-sales");
 
-export const fetchPopularItems = () => api.get("/analise/itens-populares");
+export const fetchPopularItems = () => api.get("/analytics/popular-items");
 
 export const fetchRevenueByCategory = () =>
-  api.get("/analise/receita-por-categoria");
+  api.get("/analytics/revenue-by-category");
 
 export default api;
